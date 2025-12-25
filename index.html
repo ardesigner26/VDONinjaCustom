@@ -3,364 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VDO.Ninja COMPLETO</title>
+    <title>VDO Funcional</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body { 
-            background: linear-gradient(135deg, #000 0%, #111 100%);
+            background: #000; 
             color: #fff; 
-            font-family: Arial, sans-serif; 
-            padding: 10px;
+            font-family: Arial; 
+            padding: 20px; 
+            text-align: center; 
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        h1 { 
+            color: #00ff88; 
+            margin-bottom: 30px; 
         }
         
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-            background: rgba(0,255,136,0.1);
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid #00ff88;
+        video { 
+            width: 80%; 
+            max-width: 600px; 
+            height: 400px; 
+            background: #333; 
+            border: 3px solid #00ff88; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
         }
         
-        .logo {
-            font-size: 2.5em;
-            color: #00ff88;
-            font-weight: bold;
+        .controls { 
+            background: #222; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin: 20px auto; 
+            max-width: 600px; 
         }
         
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 20px;
+        button { 
+            padding: 15px 25px; 
+            margin: 10px; 
+            background: #00ff88; 
+            color: #000; 
+            border: none; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer; 
         }
         
-        .video-section {
-            background: rgba(34,34,34,0.8);
-            border-radius: 15px;
-            padding: 20px;
-            border: 2px solid #333;
+        button:hover { 
+            background: #00cc6a; 
         }
         
-        .controls-panel {
-            background: rgba(17,17,17,0.9);
-            border-radius: 15px;
-            padding: 20px;
-            border: 2px solid #00ff88;
-            max-height: 80vh;
-            overflow-y: auto;
+        select { 
+            padding: 10px; 
+            margin: 10px; 
+            background: #333; 
+            color: #fff; 
+            border: 2px solid #666; 
+            border-radius: 6px; 
+            font-size: 16px; 
         }
         
-        video {
-            width: 100%;
-            height: 400px;
-            background: #222;
-            border-radius: 10px;
-            border: 3px solid #00ff88;
-            margin-bottom: 15px;
+        .slider-group { 
+            margin: 15px 0; 
+            text-align: left; 
         }
         
-        .video-controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
+        .slider-group label { 
+            display: block; 
+            margin-bottom: 5px; 
+            color: #00ff88; 
         }
         
-        .btn {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
+        .slider-group input { 
+            width: 100%; 
+            margin-bottom: 5px; 
         }
         
-        .btn-primary {
-            background: linear-gradient(45deg, #00ff88, #00cc6a);
-            color: #000;
+        .slider-value { 
+            color: #fff; 
+            font-weight: bold; 
         }
         
-        .btn-primary:hover {
-            transform: translateY(-2px);
+        .obs-section { 
+            background: #333; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-top: 20px; 
         }
         
-        .btn-danger {
-            background: linear-gradient(45deg, #ff4444, #cc3333);
-            color: #fff;
+        .obs-link { 
+            background: #444; 
+            padding: 10px; 
+            border-radius: 5px; 
+            font-family: monospace; 
+            font-size: 12px; 
+            word-break: break-all; 
+            margin: 10px 0; 
+            cursor: pointer; 
+            user-select: all; 
         }
         
-        .btn-secondary {
-            background: linear-gradient(45deg, #666, #555);
-            color: #fff;
-        }
-        
-        .control-group {
-            background: rgba(34,34,34,0.8);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border: 1px solid #444;
-        }
-        
-        .control-title {
-            color: #00ff88;
-            font-weight: bold;
-            margin-bottom: 12px;
-            font-size: 1.1em;
-        }
-        
-        .control-row {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-            gap: 10px;
-        }
-        
-        .control-label {
-            min-width: 70px;
-            font-size: 13px;
-            color: #ccc;
-        }
-        
-        .control-value {
-            min-width: 80px;
-            color: #00ff88;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        
-        select {
-            padding: 8px 12px;
-            background: #333;
-            color: #fff;
-            border: 2px solid #555;
-            border-radius: 6px;
-            font-size: 14px;
-            flex: 1;
-        }
-        
-        input[type="range"] {
-            flex: 1;
-            height: 6px;
-            border-radius: 3px;
-            background: #444;
-            outline: none;
-            -webkit-appearance: none;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #00ff88;
-            cursor: pointer;
-            border: 2px solid #fff;
-        }
-        
-        .obs-section {
-            background: rgba(255,68,68,0.1);
-            border: 2px solid #ff4444;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-        
-        .obs-link {
-            background: #333;
-            padding: 10px;
-            border-radius: 6px;
-            font-family: monospace;
-            font-size: 11px;
-            word-break: break-all;
-            border: 1px solid #666;
-            margin: 10px 0;
-            cursor: pointer;
-            user-select: all;
-        }
-        
-        .status-display {
-            background: rgba(0,255,136,0.1);
-            border: 2px solid #00ff88;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
-            font-family: monospace;
-            font-size: 13px;
-            line-height: 1.4;
-        }
-        
-        @media (max-width: 768px) {
-            .main-grid { grid-template-columns: 1fr; }
-            .controls-panel { max-height: none; }
-            .logo { font-size: 2em; }
+        .status { 
+            background: #444; 
+            padding: 15px; 
+            border-radius: 8px; 
+            margin-top: 20px; 
+            font-size: 14px; 
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">📹 VDO.Ninja COMPLETO</div>
-            <div style="color: #ccc;">Controles em Tempo Real + OBS Funcional</div>
+    <h1>📹 VDO.Ninja Funcional</h1>
+    
+    <video id="video" autoplay muted playsinline></video>
+    
+    <div class="controls">
+        <button onclick="iniciar()">📹 INICIAR CÂMERA</button>
+        <button onclick="parar()">⏹️ PARAR</button>
+        <button onclick="trocar()">🔄 TROCAR CÂMERA</button>
+        <button onclick="telaCheia()">🔳 TELA CHEIA</button>
+        
+        <br><br>
+        
+        <select id="camera">
+            <option value="user">📱 Frontal</option>
+            <option value="environment">📷 Traseira</option>
+        </select>
+        
+        <select id="resolucao">
+            <option value="720p30">720p @ 30fps</option>
+            <option value="1080p30">1080p @ 30fps</option>
+            <option value="1080p60">1080p @ 60fps</option>
+            <option value="4k30">4K @ 30fps</option>
+            <option value="4k60">4K @ 60fps</option>
+        </select>
+        
+        <div class="slider-group">
+            <label>🔍 Zoom: <span id="zoomVal">1.0x</span></label>
+            <input type="range" id="zoom" min="1" max="10" value="1" step="0.1" 
+                   oninput="atualizarZoom(this.value)">
         </div>
         
-        <div class="main-grid">
-            <div class="video-section">
-                <video id="localVideo" autoplay muted playsinline></video>
-                
-                <div class="video-controls">
-                    <button class="btn btn-primary" onclick="startCamera()">📹 Iniciar</button>
-                    <button class="btn btn-danger" onclick="stopCamera()">⏹️ Parar</button>
-                    <button class="btn btn-secondary" onclick="switchCamera()">🔄 Trocar</button>
-                    <button class="btn btn-secondary" onclick="enterFullscreen()">🔳 Tela Cheia</button>
-                </div>
-                
-                <div class="obs-section">
-                    <div class="control-title">🎥 OBS Studio</div>
-                    <button class="btn btn-primary" onclick="createOBSSource()" style="width: 100%; margin-bottom: 10px;">
-                        🔗 Criar Fonte OBS
-                    </button>
-                    <div class="obs-link" id="obsLink" onclick="copyToClipboard()">
-                        Clique em "Criar Fonte OBS"
-                    </div>
-                    <div style="font-size: 12px; color: #ccc; margin-top: 10px;">
-                        <strong>📋 No OBS:</strong><br>
-                        1. Sources → Add → Browser Source<br>
-                        2. Cole a URL acima<br>
-                        3. Width: 1920, Height: 1080<br>
-                        4. OK
-                    </div>
-                </div>
-                
-                <div class="status-display" id="streamStatus">
-                    Sistema carregado - Clique "Iniciar" para começar
-                </div>
-            </div>
-            
-            <div class="controls-panel">
-                <div class="control-group">
-                    <div class="control-title">📱 Câmera</div>
-                    <select id="cameraSelect" onchange="applyCameraChange()">
-                        <option value="user">📱 Frontal</option>
-                        <option value="environment">📷 Traseira</option>
-                    </select>
-                </div>
-                
-                <div class="control-group">
-                    <div class="control-title">📺 Resolução</div>
-                    <select id="resolutionSelect" onchange="applyResolutionChange()">
-                        <option value="720p30">720p @ 30fps</option>
-                        <option value="1080p30">1080p @ 30fps</option>
-                        <option value="1080p60">1080p @ 60fps</option>
-                        <option value="4k30">4K @ 30fps</option>
-                        <option value="4k60">4K @ 60fps</option>
-                    </select>
-                </div>
-                
-                <div class="control-group">
-                    <div class="control-title">🔍 Zoom (Tempo Real)</div>
-                    <div class="control-row">
-                        <span class="control-label">Zoom:</span>
-                        <input type="range" id="zoomSlider" min="1" max="10" value="1" step="0.1" 
-                               oninput="applyZoomRealTime(this.value)">
-                        <span class="control-value" id="zoomValue">1.0x</span>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <div class="control-title">📸 ISO (Tempo Real)</div>
-                    <div class="control-row">
-                        <span class="control-label">ISO:</span>
-                        <input type="range" id="isoSlider" min="50" max="3200" value="100" step="50"
-                               oninput="applyISORealtTime(this.value)">
-                        <span class="control-value" id="isoValue">100</span>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <div class="control-title">💡 Brilho (Tempo Real)</div>
-                    <div class="control-row">
-                        <span class="control-label">Brilho:</span>
-                        <input type="range" id="brightnessSlider" min="0" max="200" value="100" step="5"
-                               oninput="applyBrightnessRealTime(this.value)">
-                        <span class="control-value" id="brightnessValue">100%</span>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <div class="control-title">🎨 Contraste (Tempo Real)</div>
-                    <div class="control-row">
-                        <span class="control-label">Contraste:</span>
-                        <input type="range" id="contrastSlider" min="50" max="200" value="100" step="5"
-                               oninput="applyContrastRealTime(this.value)">
-                        <span class="control-value" id="contrastValue">100%</span>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <div class="control-title">🌈 Saturação (Tempo Real)</div>
-                    <div class="control-row">
-                        <span class="control-label">Saturação:</span>
-                        <input type="range" id="saturationSlider" min="0" max="200" value="100" step="5"
-                               oninput="applySaturationRealTime(this.value)">
-                        <span class="control-value" id="saturationValue">100%</span>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <div class="control-title">🚀 Bitrate</div>
-                    <div class="control-row">
-                        <span class="control-label">Qualidade:</span>
-                        <input type="range" id="bitrateSlider" min="500" max="15000" value="5000" step="100"
-                               oninput="updateBitrateDisplay(this.value)">
-                        <span class="control-value" id="bitrateValue">5000 kbps</span>
-                    </div>
-                </div>
-                
-                <div class="control-group">
-                    <div class="control-title">⚡ Latência</div>
-                    <div class="control-row">
-                        <span class="control-label">Delay:</span>
-                        <input type="range" id="latencySlider" min="0" max="1000" value="50" step="10"
-                               oninput="updateLatencyDisplay(this.value)">
-                        <span class="control-value" id="latencyValue">50 ms</span>
-                    </div>
-                </div>
-                
-                <button class="btn btn-primary" onclick="resetAllControls()" 
-                        style="width: 100%; padding: 15px; margin-top: 20px;">
-                    🔄 RESETAR CONTROLES
-                </button>
+        <div class="slider-group">
+            <label>💡 Brilho: <span id="brilhoVal">100%</span></label>
+            <input type="range" id="brilho" min="0" max="200" value="100" step="5" 
+                   oninput="atualizarBrilho(this.value)">
+        </div>
+        
+        <div class="slider-group">
+            <label>🎨 Contraste: <span id="contrasteVal">100%</span></label>
+            <input type="range" id="contraste" min="50" max="200" value="100" step="5" 
+                   oninput="atualizarContraste(this.value)">
+        </div>
+        
+        <div class="slider-group">
+            <label>🚀 Bitrate: <span id="bitrateVal">5000 kbps</span></label>
+            <input type="range" id="bitrate" min="500" max="15000" value="5000" step="100" 
+                   oninput="atualizarBitrate(this.value)">
+        </div>
+        
+        <button onclick="aplicar()">✅ APLICAR CONFIGURAÇÕES</button>
+        
+        <div class="obs-section">
+            <h3>🎥 OBS Studio</h3>
+            <button onclick="gerarOBS()">🔗 GERAR LINK OBS</button>
+            <div class="obs-link" id="obsLink" onclick="copiar()">
+                Clique em "GERAR LINK OBS"
             </div>
         </div>
     </div>
+    
+    <div class="status" id="status">
+        Sistema pronto - Clique "INICIAR CÂMERA"
+    </div>
 
     <script>
-        let currentStream = null;
-        let currentTrack = null;
-        let isStreaming = false;
+        let stream = null;
+        let track = null;
+        let ativo = false;
         
-        const config = {
+        // Configurações
+        let config = {
             camera: 'environment',
-            resolution: '1080p30',
+            resolucao: '1080p30',
             zoom: 1.0,
-            iso: 100,
-            brightness: 100,
-            contrast: 100,
-            saturation: 100,
-            bitrate: 5000,
-            latency: 50
+            brilho: 100,
+            contraste: 100,
+            bitrate: 5000
         };
         
-        const resolutionConfigs = {
+        // Resoluções
+        const resolucoes = {
             '720p30': { width: 1280, height: 720, frameRate: 30 },
             '1080p30': { width: 1920, height: 1080, frameRate: 30 },
             '1080p60': { width: 1920, height: 1080, frameRate: 60 },
@@ -368,88 +200,82 @@
             '4k60': { width: 3840, height: 2160, frameRate: 60 }
         };
         
-        async function startCamera() {
+        async function iniciar() {
             try {
-                updateStatus('🔧 Iniciando câmera...');
+                document.getElementById('status').textContent = '⏳ Iniciando câmera...';
                 
-                if (currentStream) {
-                    currentStream.getTracks().forEach(track => track.stop());
+                // Parar anterior
+                if (stream) {
+                    stream.getTracks().forEach(t => t.stop());
                 }
                 
-                const resConfig = resolutionConfigs[config.resolution];
+                // Pegar configurações
+                config.camera = document.getElementById('camera').value;
+                config.resolucao = document.getElementById('resolucao').value;
                 
-                const constraints = {
+                const res = resolucoes[config.resolucao];
+                
+                // Iniciar câmera
+                stream = await navigator.mediaDevices.getUserMedia({
                     video: {
-                        width: { ideal: resConfig.width },
-                        height: { ideal: resConfig.height },
-                        frameRate: { ideal: resConfig.frameRate },
+                        width: { ideal: res.width },
+                        height: { ideal: res.height },
+                        frameRate: { ideal: res.frameRate },
                         facingMode: config.camera
                     }
-                };
+                });
                 
-                console.log('📹 Constraints:', constraints);
+                // Mostrar vídeo
+                document.getElementById('video').srcObject = stream;
+                track = stream.getVideoTracks()[0];
+                ativo = true;
                 
-                currentStream = await navigator.mediaDevices.getUserMedia(constraints);
-                currentTrack = currentStream.getVideoTracks()[0];
+                // Aplicar filtros
+                aplicarFiltros();
                 
-                const video = document.getElementById('localVideo');
-                video.srcObject = currentStream;
+                // Status
+                const settings = track.getSettings();
+                document.getElementById('status').innerHTML = `
+                    ✅ CÂMERA ATIVA<br>
+                    📷 ${config.camera === 'user' ? 'Frontal' : 'Traseira'}<br>
+                    📺 ${settings.width}x${settings.height}@${settings.frameRate || 'N/A'}fps<br>
+                    🔍 Zoom: ${config.zoom}x | 💡 Brilho: ${config.brilho}% | 🎨 Contraste: ${config.contraste}%
+                `;
                 
-                isStreaming = true;
-                
-                // Aplicar configurações atuais
-                applyAllFilters();
-                applyAdvancedConstraints();
-                
-                video.onloadedmetadata = function() {
-                    const settings = currentTrack.getSettings();
-                    
-                    updateStatus(`
-                        ✅ CÂMERA ATIVA<br>
-                        📷 ${config.camera === 'user' ? 'Frontal' : 'Traseira'}<br>
-                        📺 ${settings.width}x${settings.height} @ ${settings.frameRate || 'N/A'}fps<br>
-                        🔍 Zoom: ${config.zoom}x<br>
-                        📸 ISO: ${config.iso}<br>
-                        💡 Brilho: ${config.brightness}%<br>
-                        🎨 Contraste: ${config.contrast}%<br>
-                        🌈 Saturação: ${config.saturation}%<br>
-                        🚀 Bitrate: ${config.bitrate >= 1000 ? (config.bitrate/1000).toFixed(1) + ' Mbps' : config.bitrate + ' kbps'}<br>
-                        ⚡ Latência: ${config.latency}ms
-                    `);
-                };
+                console.log('✅ Câmera iniciada:', settings);
                 
             } catch (error) {
                 console.error('❌ Erro:', error);
-                updateStatus(`❌ ERRO: ${error.message}<br>💡 Permita acesso à câmera e tente novamente`);
+                document.getElementById('status').textContent = '❌ ERRO: ' + error.message;
             }
         }
         
-        function stopCamera() {
-            if (currentStream) {
-                currentStream.getTracks().forEach(track => track.stop());
-                currentStream = null;
-                currentTrack = null;
-                isStreaming = false;
+        function parar() {
+            if (stream) {
+                stream.getTracks().forEach(t => t.stop());
+                stream = null;
+                track = null;
+                ativo = false;
                 
-                document.getElementById('localVideo').srcObject = null;
-                updateStatus('⏹️ Câmera parada');
+                document.getElementById('video').srcObject = null;
+                document.getElementById('status').textContent = '⏹️ Câmera parada';
             }
         }
         
-        function switchCamera() {
+        function trocar() {
             config.camera = config.camera === 'user' ? 'environment' : 'user';
-            document.getElementById('cameraSelect').value = config.camera;
+            document.getElementById('camera').value = config.camera;
             
-            if (isStreaming) {
-                stopCamera();
-                setTimeout(startCamera, 500);
+            if (ativo) {
+                parar();
+                setTimeout(iniciar, 500);
             }
         }
         
-        function enterFullscreen() {
-            const video = document.getElementById('localVideo');
+        function telaCheia() {
+            const video = document.getElementById('video');
             
-            if (!isStreaming) {
+            if (!ativo) {
                 alert('⚠️ Inicie a câmera primeiro!');
                 return;
             }
@@ -458,231 +284,109 @@
                 video.requestFullscreen();
             } else if (video.webkitRequestFullscreen) {
                 video.webkitRequestFullscreen();
-            } else if (video.mozRequestFullScreen) {
-                video.mozRequestFullScreen();
             } else {
-                // Fallback
-                video.style.position = 'fixed';
-                video.style.top = '0';
-                video.style.left = '0';
-                video.style.width = '100vw';
-                video.style.height = '100vh';
-                video.style.zIndex = '9999';
-                video.style.objectFit = 'cover';
-                
-                setTimeout(() => {
-                    video.style.position = '';
-                    video.style.top = '';
-                    video.style.left = '';
-                    video.style.width = '';
-                    video.style.height = '';
-                    video.style.zIndex = '';
-                    video.style.objectFit = '';
-                }, 5000);
+                alert('⚠️ Tela cheia não suportada neste navegador');
             }
         }
         
-        function createOBSSource() {
-            const timestamp = Date.now();
-            const baseUrl = window.location.href.split('?')[0];
+        function aplicar() {
+            if (ativo) {
+                parar();
+                setTimeout(iniciar, 500);
+            } else {
+                document.getElementById('status').textContent = '✅ Configurações salvas! Inicie a câmera para aplicar.';
+            }
+        }
+        
+        function atualizarZoom(value) {
+            config.zoom = parseFloat(value);
+            document.getElementById('zoomVal').textContent = value + 'x';
             
-            // URL simples que funciona no OBS
-            const obsUrl = `${baseUrl}?obs=1&t=${timestamp}`;
+            if (track) {
+                try {
+                    track.applyConstraints({ video: { zoom: config.zoom } });
+                } catch (e) {
+                    console.warn('Zoom não suportado');
+                }
+            }
+        }
+        
+        function atualizarBrilho(value) {
+            config.brilho = parseInt(value);
+            document.getElementById('brilhoVal').textContent = value + '%';
+            aplicarFiltros();
+        }
+        
+        function atualizarContraste(value) {
+            config.contraste = parseInt(value);
+            document.getElementById('contrasteVal').textContent = value + '%';
+            aplicarFiltros();
+        }
+        
+        function atualizarBitrate(value) {
+            config.bitrate = parseInt(value);
+            const display = value >= 1000 ? (value / 1000).toFixed(1) + ' Mbps' : value + ' kbps';
+            document.getElementById('bitrateVal').textContent = display;
+        }
+        
+        function aplicarFiltros() {
+            const video = document.getElementById('video');
+            video.style.filter = `brightness(${config.brilho}%) contrast(${config.contraste}%)`;
+        }
+        
+        function gerarOBS() {
+            const baseUrl = window.location.href.split('?')[0];
+            const obsUrl = baseUrl + '?obs=1&t=' + Date.now();
             
             document.getElementById('obsLink').textContent = obsUrl;
             
-            updateStatus(`
-                🔗 FONTE OBS CRIADA!<br>
+            document.getElementById('status').innerHTML = `
+                🔗 LINK OBS GERADO!<br>
                 <br>
-                📋 COPIE E COLE NO OBS:<br>
-                1. OBS → Sources → Add → Browser Source<br>
-                2. Name: VDO Ninja Custom<br>
-                3. URL: (clique no link acima para copiar)<br>
-                4. Width: 1920<br>
-                5. Height: 1080<br>
-                6. FPS: 30<br>
-                7. OK<br>
+                📋 NO OBS STUDIO:<br>
+                1. Sources → Add → Browser Source<br>
+                2. URL: (clique no link acima para copiar)<br>
+                3. Width: 1920, Height: 1080<br>
+                4. OK<br>
                 <br>
-                ✅ A câmera aparecerá automaticamente no OBS!
-            `);
+                ✅ Câmera aparecerá automaticamente!
+            `;
         }
         
-        function copyToClipboard() {
-            const text = document.getElementById('obsLink').textContent;
+        function copiar() {
+            const texto = document.getElementById('obsLink').textContent;
             
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('✅ Link copiado! Cole no OBS Browser Source');
+                navigator.clipboard.writeText(texto).then(() => {
+                    alert('✅ Link copiado! Cole no OBS');
                 });
             } else {
-                // Fallback
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert('✅ Link copiado! Cole no OBS Browser Source');
+                alert('📋 Link: ' + texto);
             }
         }
         
-        // CONTROLES EM TEMPO REAL
-        function applyZoomRealTime(value) {
-            config.zoom = parseFloat(value);
-            document.getElementById('zoomValue').textContent = value + 'x';
-            applyAdvancedConstraints();
-        }
-        
-        function applyISORealtTime(value) {
-            config.iso = parseInt(value);
-            document.getElementById('isoValue').textContent = value;
-            applyAdvancedConstraints();
-        }
-        
-        function applyBrightnessRealTime(value) {
-            config.brightness = parseInt(value);
-            document.getElementById('brightnessValue').textContent = value + '%';
-            applyAllFilters();
-        }
-        
-        function applyContrastRealTime(value) {
-            config.contrast = parseInt(value);
-            document.getElementById('contrastValue').textContent = value + '%';
-            applyAllFilters();
-        }
-        
-        function applySaturationRealTime(value) {
-            config.saturation = parseInt(value);
-            document.getElementById('saturationValue').textContent = value + '%';
-            applyAllFilters();
-        }
-        
-        function updateBitrateDisplay(value) {
-            config.bitrate = parseInt(value);
-            const display = value >= 1000 ? (value / 1000).toFixed(1) + ' Mbps' : value + ' kbps';
-            document.getElementById('bitrateValue').textContent = display;
-        }
-        
-        function updateLatencyDisplay(value) {
-            config.latency = parseInt(value);
-            document.getElementById('latencyValue').textContent = value + ' ms';
-        }
-        
-        function applyCameraChange() {
-            config.camera = document.getElementById('cameraSelect').value;
-            if (isStreaming) {
-                stopCamera();
-                setTimeout(startCamera, 500);
-            }
-        }
-        
-        function applyResolutionChange() {
-            config.resolution = document.getElementById('resolutionSelect').value;
-            if (isStreaming) {
-                stopCamera();
-                setTimeout(startCamera, 500);
-            }
-        }
-        
-        function applyAllFilters() {
-            const video = document.getElementById('localVideo');
-            if (video) {
-                video.style.filter = `
-                    brightness(${config.brightness}%) 
-                    contrast(${config.contrast}%) 
-                    saturate(${config.saturation}%)
-                `;
-            }
-        }
-        
-        async function applyAdvancedConstraints() {
-            if (!currentTrack) return;
-            
-            try {
-                const capabilities = currentTrack.getCapabilities();
-                const constraints = {};
-                
-                if (capabilities.zoom && config.zoom >= capabilities.zoom.min && config.zoom <= capabilities.zoom.max) {
-                    constraints.zoom = config.zoom;
-                }
-                
-                if (capabilities.iso && config.iso >= capabilities.iso.min && config.iso <= capabilities.iso.max) {
-                    constraints.iso = config.iso;
-                }
-                
-                if (Object.keys(constraints).length > 0) {
-                    await currentTrack.applyConstraints({ video: constraints });
-                }
-                
-            } catch (error) {
-                console.warn('⚠️ Constraint não suportado:', error);
-            }
-        }
-        
-        function resetAllControls() {
-            // Reset valores
-            config.zoom = 1.0;
-            config.iso = 100;
-            config.brightness = 100;
-            config.contrast = 100;
-            config.saturation = 100;
-            config.bitrate = 5000;
-            config.latency = 50;
-            
-            // Reset sliders
-            document.getElementById('zoomSlider').value = 1.0;
-            document.getElementById('isoSlider').value = 100;
-            document.getElementById('brightnessSlider').value = 100;
-            document.getElementById('contrastSlider').value = 100;
-            document.getElementById('saturationSlider').value = 100;
-            document.getElementById('bitrateSlider').value = 5000;
-            document.getElementById('latencySlider').value = 50;
-            
-            // Reset displays
-            document.getElementById('zoomValue').textContent = '1.0x';
-            document.getElementById('isoValue').textContent = '100';
-            document.getElementById('brightnessValue').textContent = '100%';
-            document.getElementById('contrastValue').textContent = '100%';
-            document.getElementById('saturationValue').textContent = '100%';
-            document.getElementById('bitrateValue').textContent = '5000 kbps';
-            document.getElementById('latencyValue').textContent = '50 ms';
-            
-            // Aplicar
-            applyAllFilters();
-            applyAdvancedConstraints();
-            
-            updateStatus('🔄 Todos os controles resetados para valores padrão');
-        }
-        
-        function updateStatus(message) {
-            document.getElementById('streamStatus').innerHTML = message;
-        }
-        
-        // Detectar modo OBS
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('obs') === '1') {
-            // Modo OBS simplificado
+        // Modo OBS
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('obs') === '1') {
             document.body.innerHTML = `
                 <video autoplay muted playsinline style="width: 100vw; height: 100vh; object-fit: cover; background: #000;"></video>
-                <script>
-                    navigator.mediaDevices.getUserMedia({
-                        video: { width: 1920, height: 1080, frameRate: 30, facingMode: 'environment' }
-                    }).then(stream => {
-                        document.querySelector('video').srcObject = stream;
-                    }).catch(console.error);
-                </script>
             `;
-        } else {
-            // Inicialização normal
-            document.addEventListener('DOMContentLoaded', function() {
-                console.log('🚀 VDO.Ninja COMPLETO carregado!');
-                
-                document.getElementById('cameraSelect').value = config.camera;
-                document.getElementById('resolutionSelect').value = config.resolution;
-                
-                updateStatus('📱 Sistema carregado!<br>✅ Controles em tempo real<br>✅ OBS funcional<br>Clique "Iniciar" para começar');
-            });
+            
+            // Auto-start para OBS
+            navigator.mediaDevices.getUserMedia({
+                video: { 
+                    width: 1920, 
+                    height: 1080, 
+                    frameRate: 30, 
+                    facingMode: 'environment' 
+                }
+            }).then(s => {
+                document.querySelector('video').srcObject = s;
+            }).catch(console.error);
         }
+        
+        // Inicialização
+        console.log('🚀 VDO.Ninja Funcional carregado!');
     </script>
 </body>
 </html>
