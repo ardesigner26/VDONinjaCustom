@@ -3,342 +3,612 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VDO Custom</title>
+    <title>VDO.Ninja PRO - Controles Manuais</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body { 
-            background: #000; 
+            background: linear-gradient(135deg, #000 0%, #111 100%);
             color: #fff; 
-            font-family: Arial; 
-            text-align: center; 
-            padding: 20px; 
-            margin: 0;
-            min-height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            padding: 10px;
         }
         
-        h1 { 
-            color: #00ff88; 
-            font-size: 2.5em; 
-            margin-bottom: 20px; 
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
-        .config { 
-            background: #222; 
-            padding: 25px; 
-            border-radius: 15px; 
-            margin: 15px auto; 
-            max-width: 90%;
-            box-shadow: 0 4px 15px rgba(0,255,136,0.2);
-        }
-        
-        .config h2 {
-            color: #00ff88;
+        .header {
+            text-align: center;
             margin-bottom: 20px;
-            font-size: 1.5em;
+            background: rgba(0,255,136,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #00ff88;
         }
         
-        button { 
-            padding: 15px 25px; 
-            margin: 8px; 
-            background: #00ff88; 
-            color: #000; 
-            border: none; 
-            border-radius: 10px; 
-            font-size: 16px; 
+        .logo {
+            font-size: 2.5em;
+            color: #00ff88;
             font-weight: bold;
-            cursor: pointer; 
-            min-width: 140px;
-            transition: all 0.3s;
+            text-shadow: 0 0 20px rgba(0,255,136,0.5);
         }
         
-        button:hover { 
-            background: #00cc6a; 
-            transform: translateY(-2px);
+        .subtitle {
+            color: #ccc;
+            margin-top: 10px;
         }
         
-        button:active {
-            transform: translateY(0);
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
         }
         
-        select { 
-            padding: 12px; 
-            margin: 10px; 
-            background: #333; 
-            color: #fff; 
-            border: 2px solid #666; 
-            border-radius: 8px; 
-            font-size: 16px; 
-            width: 90%;
-            max-width: 300px;
+        .video-section {
+            background: rgba(34,34,34,0.8);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #333;
         }
         
-        video { 
-            width: 95%; 
-            max-width: 600px;
-            height: 300px; 
-            background: #333; 
-            border-radius: 15px; 
-            margin: 20px auto; 
-            display: block;
+        .controls-panel {
+            background: rgba(17,17,17,0.9);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #00ff88;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        video {
+            width: 100%;
+            height: 400px;
+            background: #222;
+            border-radius: 10px;
             border: 3px solid #00ff88;
+            margin-bottom: 15px;
+        }
+        
+        .video-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #00ff88, #00cc6a);
+            color: #000;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,255,136,0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, #ff4444, #cc3333);
+            color: #fff;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(45deg, #666, #555);
+            color: #fff;
         }
         
         .control-group {
-            margin: 20px 0;
-            padding: 15px;
-            background: #333;
+            background: rgba(34,34,34,0.8);
             border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
         }
         
-        .control-group label {
-            display: block;
-            margin-bottom: 10px;
+        .control-title {
+            color: #00ff88;
             font-weight: bold;
-            color: #00ff88;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1em;
         }
         
-        .slider-container {
-            margin: 15px 0;
+        .control-row {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            gap: 10px;
         }
         
-        .slider-value {
-            font-size: 1.2em;
+        .control-label {
+            min-width: 80px;
+            font-size: 13px;
+            color: #ccc;
+        }
+        
+        .control-value {
+            min-width: 80px;
             color: #00ff88;
-            margin: 5px 0;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        select, input[type="range"] {
+            flex: 1;
+        }
+        
+        select {
+            padding: 8px 12px;
+            background: #333;
+            color: #fff;
+            border: 2px solid #555;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        select:focus {
+            border-color: #00ff88;
+            outline: none;
         }
         
         input[type="range"] {
-            width: 90%;
-            height: 8px;
-            border-radius: 5px;
-            background: #555;
+            height: 6px;
+            border-radius: 3px;
+            background: #444;
             outline: none;
             -webkit-appearance: none;
         }
         
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: #00ff88;
             cursor: pointer;
             border: 2px solid #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
         }
         
-        .status {
-            margin-top: 20px;
-            padding: 15px;
-            background: #333;
+        .obs-section {
+            background: rgba(255,68,68,0.1);
+            border: 2px solid #ff4444;
             border-radius: 10px;
-            font-size: 16px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .obs-link {
+            background: #333;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 12px;
+            word-break: break-all;
+            border: 1px solid #666;
+            margin: 10px 0;
+        }
+        
+        .status-display {
+            background: rgba(0,255,136,0.1);
             border: 2px solid #00ff88;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 13px;
+            line-height: 1.4;
         }
         
-        .camera-controls {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
+        .fps-warning {
+            background: rgba(255,136,0,0.1);
+            border: 2px solid #ff8800;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 12px;
+            color: #ffaa44;
         }
         
-        /* Responsivo para mobile */
         @media (max-width: 768px) {
-            h1 { font-size: 2em; }
-            .config { padding: 20px; margin: 10px; }
-            button { padding: 12px 20px; font-size: 14px; min-width: 120px; }
-            video { height: 250px; }
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls-panel {
+                max-height: none;
+            }
+            
+            .logo {
+                font-size: 2em;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>📺 VDO Custom</h1>
-    
-    <video id="video" autoplay muted playsinline></video>
-    
-    <div class="camera-controls">
-        <button onclick="start()">📹 INICIAR CÂMERA</button>
-        <button onclick="stop()">⏹️ PARAR</button>
-        <button onclick="switchCamera()">🔄 TROCAR CÂMERA</button>
-    </div>
-    
-    <div class="config">
-        <h2>📱 SELEÇÃO DE CÂMERA</h2>
+    <div class="container">
+        <div class="header">
+            <div class="logo">📹 VDO.Ninja PRO</div>
+            <div class="subtitle">Controles Manuais Avançados + Link OBS</div>
+        </div>
         
-        <select id="cameraSelect">
-            <option value="user">📱 Câmera Frontal</option>
-            <option value="environment">📷 Câmera Traseira</option>
-        </select>
-    </div>
-    
-    <div class="config">
-        <h2>📺 RESOLUÇÃO & FPS</h2>
-        
-        <select id="res">
-            <option value="1080p30">1080p @ 30fps</option>
-            <option value="1080p60">🚀 1080p @ 60fps</option>
-            <option value="4k30">⭐ 4K @ 30fps</option>
-            <option value="4k60">🔥 4K @ 60fps</option>
-        </select>
-    </div>
-    
-    <div class="config">
-        <h2>🚀 BITRATE</h2>
-        
-        <div class="control-group">
-            <label>Qualidade do Vídeo:</label>
-            <div class="slider-value" id="bitrateValue">2500 kbps</div>
-            <input type="range" id="bitrateSlider" min="500" max="15000" value="2500" 
-                   oninput="updateBitrate(this.value)">
-            <div style="display: flex; justify-content: space-between; font-size: 12px; color: #999; margin-top: 5px;">
-                <span>500 kbps</span>
-                <span>15 Mbps</span>
+        <div class="main-grid">
+            <div class="video-section">
+                <video id="localVideo" autoplay muted playsinline></video>
+                
+                <div class="video-controls">
+                    <button class="btn btn-primary" onclick="startAdvancedCamera()">
+                        📹 Iniciar Câmera PRO
+                    </button>
+                    <button class="btn btn-danger" onclick="stopCamera()">
+                        ⏹️ Parar
+                    </button>
+                    <button class="btn btn-secondary" onclick="switchCamera()">
+                        🔄 Trocar Câmera
+                    </button>
+                    <button class="btn btn-secondary" onclick="toggleFullscreen()">
+                        🔳 Tela Cheia
+                    </button>
+                </div>
+                
+                <div class="obs-section">
+                    <div class="control-title">🎥 Link para OBS</div>
+                    <button class="btn btn-primary" onclick="generateOBSLink()" style="width: 100%; margin-bottom: 10px;">
+                        🔗 Gerar Link OBS
+                    </button>
+                    <div class="obs-link" id="obsLink">Clique em "Gerar Link OBS" para criar o link</div>
+                    <small style="color: #ccc;">
+                        Cole este link no OBS como "Browser Source" para capturar o vídeo
+                    </small>
+                </div>
+                
+                <div class="status-display" id="streamStatus">
+                    Aguardando inicialização...
+                </div>
+            </div>
+            
+            <div class="controls-panel">
+                <div class="control-group">
+                    <div class="control-title">📱 Seleção de Câmera</div>
+                    <select id="cameraSelect">
+                        <option value="user">📱 Câmera Frontal</option>
+                        <option value="environment">📷 Câmera Traseira</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-title">📺 Resolução & FPS</div>
+                    <select id="resolutionSelect">
+                        <option value="720p30">720p @ 30fps (Compatível)</option>
+                        <option value="1080p30">1080p @ 30fps (Padrão)</option>
+                        <option value="1080p60">1080p @ 60fps (Forçar)</option>
+                        <option value="4k30">4K @ 30fps (Ultra)</option>
+                        <option value="4k60">4K @ 60fps (Máximo)</option>
+                    </select>
+                    
+                    <div class="fps-warning">
+                        ⚠️ iOS Safari limita 60fps. Use Chrome ou force configuração.
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-title">🔍 Zoom Manual</div>
+                    <div class="control-row">
+                        <span class="control-label">Zoom:</span>
+                        <input type="range" id="zoomSlider" min="1" max="10" value="1" step="0.1" 
+                               oninput="updateZoom(this.value)">
+                        <span class="control-value" id="zoomValue">1.0x</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-title">📸 ISO Manual</div>
+                    <div class="control-row">
+                        <span class="control-label">ISO:</span>
+                        <input type="range" id="isoSlider" min="50" max="3200" value="100" step="50"
+                               oninput="updateISO(this.value)">
+                        <span class="control-value" id="isoValue">100</span>
+                    </div>
+                    <div class="control-row">
+                        <span class="control-label">Modo:</span>
+                        <select id="exposureMode">
+                            <option value="continuous">Automático</option>
+                            <option value="manual">Manual</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-title">💡 Controle de Luz</div>
+                    <div class="control-row">
+                        <span class="control-label">Brilho:</span>
+                        <input type="range" id="brightnessSlider" min="0" max="200" value="100" step="5"
+                               oninput="updateBrightness(this.value)">
+                        <span class="control-value" id="brightnessValue">100%</span>
+                    </div>
+                    <div class="control-row">
+                        <span class="control-label">Contraste:</span>
+                        <input type="range" id="contrastSlider" min="50" max="200" value="100" step="5"
+                               oninput="updateContrast(this.value)">
+                        <span class="control-value" id="contrastValue">100%</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-title">🎚️ Configurações de Stream</div>
+                    <div class="control-row">
+                        <span class="control-label">Bitrate:</span>
+                        <input type="range" id="bitrateSlider" min="500" max="15000" value="5000" step="100"
+                               oninput="updateBitrate(this.value)">
+                        <span class="control-value" id="bitrateValue">5000 kbps</span>
+                    </div>
+                    <div class="control-row">
+                        <span class="control-label">Latência:</span>
+                        <input type="range" id="latencySlider" min="0" max="1000" value="50" step="10"
+                               oninput="updateLatency(this.value)">
+                        <span class="control-value" id="latencyValue">50 ms</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-title">🔧 Configurações Avançadas</div>
+                    <div class="control-row">
+                        <span class="control-label">Foco:</span>
+                        <select id="focusMode">
+                            <option value="continuous">Automático</option>
+                            <option value="single-shot">Manual</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <span class="control-label">Balanço:</span>
+                        <select id="whiteBalance">
+                            <option value="continuous">Automático</option>
+                            <option value="manual">Manual</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="applyAllSettings()" 
+                        style="width: 100%; padding: 15px; font-size: 16px; margin-top: 20px;">
+                    ✅ APLICAR TODAS CONFIGURAÇÕES
+                </button>
             </div>
         </div>
     </div>
-    
-    <div class="config">
-        <h2>⚡ LATÊNCIA</h2>
-        
-        <div class="control-group">
-            <label>Delay do Vídeo:</label>
-            <div class="slider-value" id="latencyValue">50 ms</div>
-            <input type="range" id="latencySlider" min="0" max="1000" value="50" 
-                   oninput="updateLatency(this.value)">
-            <div style="display: flex; justify-content: space-between; font-size: 12px; color: #999; margin-top: 5px;">
-                <span>0 ms</span>
-                <span>1000 ms</span>
-            </div>
-        </div>
-    </div>
-    
-    <div class="config">
-        <button onclick="apply()" style="width: 90%; padding: 20px; font-size: 18px;">
-            ✅ APLICAR CONFIGURAÇÕES
-        </button>
-    </div>
-    
-    <div id="status" class="status">Pronto para usar</div>
 
     <script>
-        let stream = null;
-        let currentFacingMode = 'user'; // Começa com frontal
+        let currentStream = null;
+        let currentTrack = null;
+        let obsStreamId = null;
         
-        // Configurações atuais
-        let config = {
-            bitrate: 2500,
-            latency: 50
+        const config = {
+            camera: 'environment', // Começar com traseira
+            resolution: '1080p60',
+            zoom: 1.0,
+            iso: 100,
+            brightness: 100,
+            contrast: 100,
+            bitrate: 5000,
+            latency: 50,
+            exposureMode: 'continuous',
+            focusMode: 'continuous',
+            whiteBalance: 'continuous'
         };
         
-        async function start() {
+        const resolutionConfigs = {
+            '720p30': { width: 1280, height: 720, frameRate: 30 },
+            '1080p30': { width: 1920, height: 1080, frameRate: 30 },
+            '1080p60': { width: 1920, height: 1080, frameRate: 60 },
+            '4k30': { width: 3840, height: 2160, frameRate: 30 },
+            '4k60': { width: 3840, height: 2160, frameRate: 60 }
+        };
+        
+        async function startAdvancedCamera() {
             try {
-                document.getElementById('status').textContent = 'Iniciando câmera...';
+                updateStatus('🔧 Configurando câmera avançada...');
                 
-                // Parar stream anterior se existir
-                if (stream) {
-                    stream.getTracks().forEach(track => track.stop());
+                // Parar stream anterior
+                if (currentStream) {
+                    currentStream.getTracks().forEach(track => track.stop());
                 }
                 
-                const res = document.getElementById('res').value;
-                const cameraType = document.getElementById('cameraSelect').value;
+                const resConfig = resolutionConfigs[config.resolution];
                 
-                let w, h, fps;
-                
-                if (res === '1080p30') { w = 1920; h = 1080; fps = 30; }
-                if (res === '1080p60') { w = 1920; h = 1080; fps = 60; }
-                if (res === '4k30') { w = 3840; h = 2160; fps = 30; }
-                if (res === '4k60') { w = 3840; h = 2160; fps = 60; }
-                
-                // Configurações da câmera
+                // Constraints avançadas para forçar 60fps
                 const constraints = {
                     video: {
-                        width: { ideal: w, max: w },
-                        height: { ideal: h, max: h },
-                        frameRate: { ideal: fps, max: fps },
-                        facingMode: cameraType // 'user' = frontal, 'environment' = traseira
+                        width: { ideal: resConfig.width, max: resConfig.width },
+                        height: { ideal: resConfig.height, max: resConfig.height },
+                        frameRate: { 
+                            ideal: resConfig.frameRate, 
+                            max: resConfig.frameRate,
+                            min: resConfig.frameRate // Forçar FPS específico
+                        },
+                        facingMode: config.camera,
+                        
+                        // Configurações avançadas
+                        exposureMode: config.exposureMode,
+                        focusMode: config.focusMode,
+                        whiteBalanceMode: config.whiteBalance,
+                        
+                        // Tentar forçar qualidade máxima
+                        aspectRatio: resConfig.width / resConfig.height,
+                        resizeMode: 'none'
                     }
                 };
                 
-                console.log('Configurações:', constraints);
+                console.log('📹 Constraints avançadas:', constraints);
                 
-                stream = await navigator.mediaDevices.getUserMedia(constraints);
+                currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+                currentTrack = currentStream.getVideoTracks()[0];
                 
-                document.getElementById('video').srcObject = stream;
+                // Aplicar configurações avançadas
+                await applyAdvancedSettings();
                 
-                // Atualizar status com informações reais
-                const videoTrack = stream.getVideoTracks()[0];
-                const settings = videoTrack.getSettings();
+                // Configurar vídeo
+                const video = document.getElementById('localVideo');
+                video.srcObject = currentStream;
                 
-                const cameraName = cameraType === 'user' ? 'Frontal' : 'Traseira';
+                // Aguardar carregamento e mostrar informações reais
+                video.onloadedmetadata = function() {
+                    const settings = currentTrack.getSettings();
+                    const capabilities = currentTrack.getCapabilities();
+                    
+                    updateStatus(`
+                        ✅ CÂMERA ATIVA - MODO AVANÇADO<br>
+                        📷 ${config.camera === 'user' ? 'Frontal' : 'Traseira'}<br>
+                        📺 ${settings.width}x${settings.height} @ ${settings.frameRate || 'N/A'}fps<br>
+                        🔍 Zoom: ${config.zoom}x<br>
+                        📸 ISO: ${config.iso}<br>
+                        💡 Brilho: ${config.brightness}%<br>
+                        🚀 Bitrate: ${config.bitrate >= 1000 ? (config.bitrate/1000).toFixed(1) + ' Mbps' : config.bitrate + ' kbps'}<br>
+                        ⚡ Latência: ${config.latency}ms<br>
+                        <br>
+                        📋 CAPACIDADES DETECTADAS:<br>
+                        🔍 Zoom: ${capabilities.zoom ? capabilities.zoom.min + '-' + capabilities.zoom.max + 'x' : 'N/A'}<br>
+                        📸 ISO: ${capabilities.iso ? capabilities.iso.min + '-' + capabilities.iso.max : 'N/A'}<br>
+                        🎥 FPS: ${capabilities.frameRate ? capabilities.frameRate.min + '-' + capabilities.frameRate.max : 'N/A'}
+                    `);
+                    
+                    console.log('📊 Settings reais:', settings);
+                    console.log('🔧 Capabilities:', capabilities);
+                };
                 
-                document.getElementById('status').innerHTML = `
-                    ✅ CÂMERA ATIVA<br>
-                    📷 ${cameraName}<br>
-                    📺 ${settings.width || w}x${settings.height || h}@${settings.frameRate || fps}fps<br>
-                    🚀 ${config.bitrate >= 1000 ? (config.bitrate/1000).toFixed(1) + ' Mbps' : config.bitrate + ' kbps'}<br>
-                    ⚡ ${config.latency}ms
-                `;
-                
-                currentFacingMode = cameraType;
-                
-            } catch (e) {
-                console.error('Erro:', e);
-                let errorMsg = 'ERRO: ' + e.message;
-                
-                if (e.name === 'NotAllowedError') {
-                    errorMsg = 'ERRO: Permita acesso à câmera';
-                } else if (e.name === 'NotFoundError') {
-                    errorMsg = 'ERRO: Câmera não encontrada';
-                } else if (e.name === 'OverconstrainedError') {
-                    errorMsg = 'ERRO: Resolução não suportada. Tente uma menor.';
-                }
-                
-                document.getElementById('status').textContent = errorMsg;
+            } catch (error) {
+                console.error('❌ Erro:', error);
+                updateStatus(`❌ ERRO: ${error.message}<br><br>💡 DICAS:<br>- Use Chrome para melhor suporte a 60fps<br>- Permita acesso à câmera<br>- Tente resolução menor se 4K falhar`);
             }
         }
         
-        function stop() {
-            if (stream) {
-                stream.getTracks().forEach(t => t.stop());
-                document.getElementById('video').srcObject = null;
-                document.getElementById('status').textContent = 'Câmera parada';
-                stream = null;
+        async function applyAdvancedSettings() {
+            if (!currentTrack) return;
+            
+            try {
+                const capabilities = currentTrack.getCapabilities();
+                const constraints = {};
+                
+                // Aplicar zoom se suportado
+                if (capabilities.zoom && config.zoom >= capabilities.zoom.min && config.zoom <= capabilities.zoom.max) {
+                    constraints.zoom = config.zoom;
+                }
+                
+                // Aplicar ISO se suportado
+                if (capabilities.iso && config.iso >= capabilities.iso.min && config.iso <= capabilities.iso.max) {
+                    constraints.iso = config.iso;
+                }
+                
+                // Aplicar configurações avançadas
+                if (capabilities.exposureMode && capabilities.exposureMode.includes(config.exposureMode)) {
+                    constraints.exposureMode = config.exposureMode;
+                }
+                
+                if (capabilities.focusMode && capabilities.focusMode.includes(config.focusMode)) {
+                    constraints.focusMode = config.focusMode;
+                }
+                
+                if (capabilities.whiteBalanceMode && capabilities.whiteBalanceMode.includes(config.whiteBalance)) {
+                    constraints.whiteBalanceMode = config.whiteBalance;
+                }
+                
+                if (Object.keys(constraints).length > 0) {
+                    await currentTrack.applyConstraints({ video: constraints });
+                    console.log('✅ Configurações aplicadas:', constraints);
+                }
+                
+                // Aplicar filtros CSS para brilho e contraste
+                const video = document.getElementById('localVideo');
+                video.style.filter = `brightness(${config.brightness}%) contrast(${config.contrast}%)`;
+                
+            } catch (error) {
+                console.warn('⚠️ Erro ao aplicar configurações:', error);
+            }
+        }
+        
+        function stopCamera() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+                currentStream = null;
+                currentTrack = null;
+                
+                document.getElementById('localVideo').srcObject = null;
+                updateStatus('⏹️ Câmera parada');
             }
         }
         
         function switchCamera() {
-            // Alternar entre frontal e traseira
-            const currentCamera = document.getElementById('cameraSelect').value;
-            const newCamera = currentCamera === 'user' ? 'environment' : 'user';
+            config.camera = config.camera === 'user' ? 'environment' : 'user';
+            document.getElementById('cameraSelect').value = config.camera;
             
-            document.getElementById('cameraSelect').value = newCamera;
-            
-            // Se câmera está ativa, reiniciar com nova câmera
-            if (stream) {
-                stop();
-                setTimeout(start, 500);
+            if (currentStream) {
+                stopCamera();
+                setTimeout(startAdvancedCamera, 500);
             }
         }
         
-        function apply() {
-            document.getElementById('status').textContent = 'Aplicando configurações...';
-            
-            // Se câmera está ativa, reiniciar com novas configurações
-            if (stream) { 
-                stop(); 
-                setTimeout(start, 500); 
-            } else {
-                document.getElementById('status').textContent = 'Configurações salvas! Inicie a câmera para aplicar.';
+        function toggleFullscreen() {
+            const video = document.getElementById('localVideo');
+            if (video && currentStream) {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    video.requestFullscreen().catch(console.error);
+                }
             }
+        }
+        
+        function generateOBSLink() {
+            obsStreamId = 'stream_' + Date.now();
+            const baseUrl = window.location.origin + window.location.pathname;
+            const obsUrl = `${baseUrl}?obs=true&stream=${obsStreamId}&bitrate=${config.bitrate}&resolution=${config.resolution}`;
+            
+            document.getElementById('obsLink').textContent = obsUrl;
+            
+            updateStatus(`🔗 Link OBS gerado!<br>Stream ID: ${obsStreamId}<br><br>📋 COMO USAR NO OBS:<br>1. Adicione "Browser Source"<br>2. Cole a URL acima<br>3. Configure Width: 1920, Height: 1080<br>4. Marque "Shutdown source when not visible"`);
+        }
+        
+        // Funções de atualização dos controles
+        function updateZoom(value) {
+            config.zoom = parseFloat(value);
+            document.getElementById('zoomValue').textContent = value + 'x';
+            if (currentTrack) applyAdvancedSettings();
+        }
+        
+        function updateISO(value) {
+            config.iso = parseInt(value);
+            document.getElementById('isoValue').textContent = value;
+            if (currentTrack) applyAdvancedSettings();
+        }
+        
+        function updateBrightness(value) {
+            config.brightness = parseInt(value);
+            document.getElementById('brightnessValue').textContent = value + '%';
+            if (currentTrack) applyAdvancedSettings();
+        }
+        
+        function updateContrast(value) {
+            config.contrast = parseInt(value);
+            document.getElementById('contrastValue').textContent = value + '%';
+            if (currentTrack) applyAdvancedSettings();
         }
         
         function updateBitrate(value) {
             config.bitrate = parseInt(value);
-            const display = document.getElementById('bitrateValue');
-            display.textContent = value >= 1000 ? 
-                (value / 1000).toFixed(1) + ' Mbps' : 
-                value + ' kbps';
+            const display = value >= 1000 ? (value / 1000).toFixed(1) + ' Mbps' : value + ' kbps';
+            document.getElementById('bitrateValue').textContent = display;
         }
         
         function updateLatency(value) {
@@ -346,10 +616,50 @@
             document.getElementById('latencyValue').textContent = value + ' ms';
         }
         
-        // Sincronizar seletor de câmera com o valor inicial
+        function applyAllSettings() {
+            // Atualizar configurações dos selects
+            config.camera = document.getElementById('cameraSelect').value;
+            config.resolution = document.getElementById('resolutionSelect').value;
+            config.exposureMode = document.getElementById('exposureMode').value;
+            config.focusMode = document.getElementById('focusMode').value;
+            config.whiteBalance = document.getElementById('whiteBalance').value;
+            
+            updateStatus('⚙️ Aplicando todas as configurações...');
+            
+            if (currentStream) {
+                stopCamera();
+                setTimeout(startAdvancedCamera, 1000);
+            } else {
+                updateStatus('✅ Configurações salvas! Inicie a câmera para aplicar.');
+            }
+        }
+        
+        function updateStatus(message) {
+            document.getElementById('streamStatus').innerHTML = message;
+        }
+        
+        // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('cameraSelect').value = currentFacingMode;
+            console.log('🚀 VDO.Ninja PRO carregado!');
+            
+            // Configurar valores iniciais
+            document.getElementById('cameraSelect').value = config.camera;
+            document.getElementById('resolutionSelect').value = config.resolution;
+            
+            updateStatus('📱 VDO.Ninja PRO carregado!<br>Clique em "Iniciar Câmera PRO" para começar com controles avançados.');
         });
+        
+        // Detectar se é link OBS
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('obs') === 'true') {
+            // Modo OBS - iniciar automaticamente
+            document.body.style.background = '#000';
+            document.querySelector('.header').style.display = 'none';
+            document.querySelector('.controls-panel').style.display = 'none';
+            document.querySelector('.main-grid').style.gridTemplateColumns = '1fr';
+            
+            setTimeout(startAdvancedCamera, 1000);
+        }
     </script>
 </body>
 </html>
