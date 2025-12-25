@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>VDO Custom</title>
+    <style>
+        body { background: #000; color: #fff; font-family: Arial; text-align: center; padding: 50px; }
+        h1 { color: #00ff88; font-size: 3em; margin-bottom: 30px; }
+        .config { background: #222; padding: 30px; border-radius: 15px; margin: 20px auto; max-width: 600px; }
+        button { padding: 20px 40px; margin: 15px; background: #00ff88; color: #000; border: none; border-radius: 10px; font-size: 18px; cursor: pointer; }
+        button:hover { background: #00cc6a; }
+        select { padding: 15px; margin: 10px; background: #333; color: #fff; border: none; border-radius: 5px; font-size: 16px; }
+        video { width: 80%; height: 400px; background: #333; border-radius: 10px; margin: 20px; }
+    </style>
+</head>
+<body>
+    <h1>📺 VDO Custom</h1>
+    
+    <video id="video" autoplay muted></video>
+    
+    <div class="config">
+        <h2>⚙️ SUAS CONFIGURAÇÕES</h2>
+        
+        <select id="res">
+            <option value="1080p30">1080p @ 30fps</option>
+            <option value="1080p60">🚀 1080p @ 60fps</option>
+            <option value="4k30">⭐ 4K @ 30fps</option>
+            <option value="4k60">🔥 4K @ 60fps</option>
+        </select>
+        
+        <br><br>
+        
+        <button onclick="start()">📹 INICIAR CÂMERA</button>
+        <button onclick="stop()">⏹️ PARAR</button>
+        <button onclick="apply()">✅ APLICAR CONFIG</button>
+    </div>
+    
+    <div id="status" style="margin-top: 30px; font-size: 18px;">Pronto para usar</div>
+
+    <script>
+        let stream = null;
+        
+        async function start() {
+            try {
+                const res = document.getElementById('res').value;
+                let w, h, fps;
+                
+                if (res === '1080p30') { w = 1920; h = 1080; fps = 30; }
+                if (res === '1080p60') { w = 1920; h = 1080; fps = 60; }
+                if (res === '4k30') { w = 3840; h = 2160; fps = 30; }
+                if (res === '4k60') { w = 3840; h = 2160; fps = 60; }
+                
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { width: w, height: h, frameRate: fps }
+                });
+                
+                document.getElementById('video').srcObject = stream;
+                document.getElementById('status').textContent = 'CÂMERA ATIVA: ' + w + 'x' + h + '@' + fps + 'fps';
+                
+            } catch (e) {
+                document.getElementById('status').textContent = 'ERRO: ' + e.message;
+            }
+        }
+        
+        function stop() {
+            if (stream) {
+                stream.getTracks().forEach(t => t.stop());
+                document.getElementById('video').srcObject = null;
+                document.getElementById('status').textContent = 'Câmera parada';
+            }
+        }
+        
+        function apply() {
+            document.getElementById('status').textContent = 'Configurações aplicadas!';
+            if (stream) { stop(); setTimeout(start, 500); }
+        }
+    </script>
+</body>
+</html>
